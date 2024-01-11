@@ -1,14 +1,9 @@
-from typing import Optional
-
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile,File
+import pandas
 
 app = FastAPI()
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/upload")
+async def upload(file:UploadFile = File(...)):
+    df = pandas.read_csv(file.file).T.to_dict()
+    return df
