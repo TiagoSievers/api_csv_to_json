@@ -11,7 +11,7 @@ async def upload(file:UploadFile = File(...)):
         df = pandas.read_csv(file.file)
         data_list = df.to_dict(orient="records")
 
-        result = {"data": data_list}
+        result = [{"data": data_list}]
 
         return result
 
