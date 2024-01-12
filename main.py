@@ -11,11 +11,7 @@ async def upload(file:UploadFile = File(...)):
         df = pandas.read_csv(file.file)
         data_list = df.to_dict(orient="records")
 
-        result = {"data": data_list}
-
-        json_result = json.dumps(result)
-
-        return json_result
+        return data_list
 
     except Exception as e:
         return {"error": f"An erro accurred: {str(e)}"}
