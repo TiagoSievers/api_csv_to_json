@@ -6,14 +6,15 @@ app = FastAPI()
 
 @app.post("/")
 async def upload(file:UploadFile = File(...)):
-    df = pandas.read_csv(file.file).T.to_dict()
-    json_raw = json.dumps(df)
-    raw_reponse = json_raw
+    try:
+        #df = pandas.read_csv(file.file).T.to_dict()
+        df = pandas.read_csv(file.file)
+        data_list = df.to_dict(orient="records")
 
-    cleaned_reponse = raw_reponse.replace("\\", "")
-    json_data = json.loads(cleaned_reponse)
+        return data_list
 
-    return json_data
+    except Exception as e:
+        return {"error": f"An erro accurred: {str(e)}"}
 
     # Convert DataFrame to JSON
     #json_data = df.to_json(orient='records')
