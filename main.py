@@ -7,7 +7,12 @@ app = FastAPI()
 @app.post("/")
 async def upload(file:UploadFile = File(...)):
     df = pandas.read_csv(file.file).T.to_dict()
-    json_data = json.dumps(df)
+    json_raw = json.dumps(df)
+    raw_reponse = json_raw
+
+    cleaned_reponse = raw_reponse.replace("\\", "")
+    json_data = json.loads(cleaned_reponse)
+
     return json_data
 
     # Convert DataFrame to JSON
