@@ -11,7 +11,9 @@ async def upload(file:UploadFile = File(...)):
         df = pandas.read_csv(file.file)
         data_list = df.to_dict(orient="records")
 
-        return data_list
+        result = {"data": data_list}
+
+        return result
 
     except Exception as e:
         return {"error": f"An erro accurred: {str(e)}"}
