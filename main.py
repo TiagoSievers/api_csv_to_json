@@ -5,13 +5,13 @@ import json
 app = FastAPI()
 
 @app.post("/")
-async def upload(file:UploadFile = File(...)):
+async def upload(user_id: str, file:UploadFile = File(...)):
     try:
         #df = pandas.read_csv(file.file).T.to_dict()
         df = pandas.read_csv(file.file)
         data_list = df.to_dict(orient="records")
 
-        result = {"data": data_list}
+        result = {"user_id": user_id, "data": data_list}
 
         return result
 
